@@ -14,12 +14,13 @@
 
     body {
       margin: 0;
-      height: 100vh;
+      min-height: 100vh;
       display: grid;
       place-items: center;
       font-family: 'Poppins', sans-serif;
-      overflow: hidden;
+      overflow-x: hidden;
       position: relative;
+      padding: 20px 0;
     }
 
     /* Background video */
@@ -137,7 +138,7 @@
 
     /* Yay screen styles */
     .yay {
-      font-size: clamp(40px, 8vw, 60px);
+      font-size: clamp(36px, 7vw, 60px);
       margin: 0 0 20px;
       text-align: center;
       background: linear-gradient(135deg, #ff0066, #ff69b4, #ffd700);
@@ -157,22 +158,25 @@
     }
 
     .sub {
-      font-size: 24px;
+      font-size: clamp(18px, 4vw, 24px);
       margin: 0 0 30px;
       text-align: center;
       color: #ff0066;
     }
 
     .gif {
-      width: min(560px, 90%);
+      width: 100%;
+      max-width: 560px;
+      height: auto;
       border-radius: 20px;
       display: block;
       margin: 0 auto 30px;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      object-fit: contain;
     }
 
     .love {
-      font-size: 28px;
+      font-size: clamp(20px, 5vw, 28px);
       margin: 0;
       text-align: center;
       color: #ff0066;
@@ -232,18 +236,25 @@
       }
     }
 
+    /* Tablet Styles */
     @media (max-width: 768px) {
+      body {
+        padding: 15px 0;
+      }
+
       .card {
         padding: 30px 20px;
+        width: 94vw;
       }
 
       .title {
-        font-size: 28px;
+        font-size: clamp(24px, 5vw, 32px);
+        margin-bottom: 25px;
       }
 
       .btn {
-        font-size: 16px;
-        padding: 12px 24px;
+        font-size: 18px;
+        padding: 14px 32px;
       }
 
       .btnRow {
@@ -256,6 +267,110 @@
       .no {
         position: static;
         transform: none;
+      }
+
+      .gif {
+        max-width: 100%;
+        margin: 0 auto 20px;
+      }
+
+      .floating-heart {
+        font-size: 24px;
+      }
+    }
+
+    /* Mobile Styles */
+    @media (max-width: 480px) {
+      body {
+        padding: 10px 0;
+      }
+
+      .card {
+        padding: 25px 15px;
+        width: 96vw;
+        border-radius: 20px;
+      }
+
+      .title {
+        font-size: clamp(20px, 6vw, 28px);
+        margin-bottom: 20px;
+      }
+
+      .btn {
+        font-size: 16px;
+        padding: 12px 28px;
+        letter-spacing: 0.5px;
+      }
+
+      .btnRow {
+        gap: 12px;
+        margin-top: 20px;
+      }
+
+      .yay {
+        font-size: clamp(28px, 8vw, 40px);
+        margin-bottom: 15px;
+      }
+
+      .sub {
+        font-size: clamp(16px, 4vw, 20px);
+        margin-bottom: 20px;
+      }
+
+      .gif {
+        border-radius: 15px;
+        margin-bottom: 20px;
+      }
+
+      .love {
+        font-size: clamp(18px, 5vw, 24px);
+      }
+
+      .floating-heart {
+        font-size: 20px;
+      }
+    }
+
+    /* Very small screens */
+    @media (max-width: 360px) {
+      .card {
+        padding: 20px 12px;
+      }
+
+      .title {
+        font-size: 22px;
+      }
+
+      .btn {
+        font-size: 14px;
+        padding: 10px 24px;
+      }
+    }
+
+    /* Landscape mobile */
+    @media (max-width: 768px) and (orientation: landscape) {
+      body {
+        padding: 10px 0;
+      }
+
+      .card {
+        padding: 25px;
+        max-height: 90vh;
+        overflow-y: auto;
+      }
+
+      .title {
+        margin-bottom: 15px;
+      }
+
+      .btnRow {
+        margin-top: 15px;
+        gap: 10px;
+      }
+
+      .gif {
+        max-height: 40vh;
+        object-fit: contain;
       }
     }
   </style>
@@ -274,7 +389,7 @@
     <!-- Screen 1: Question -->
     <div id="questionScreen" class="screen active">
       <h1 class="title">
-        Pavani Bhashyam,<br />
+        Miss Kunjammee,<br />
         will you be my Valentine?
       </h1>
       <div class="btnRow">
@@ -289,7 +404,7 @@
       <p class="sub">Best decision ever 😘</p>
       <img
         class="gif"
-        src="https://media.giphy.com/media/3o6fJ1BM7R2EBRDnxK/giphy.gif"
+        src="images/image1.jpg"
         alt="Celebration gif"
       />
       <p class="love">I love you ❤️</p>

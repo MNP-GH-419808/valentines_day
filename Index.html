@@ -34,26 +34,28 @@
         }
         @keyframes gradientShift { 0%,100% {background-position:0% 50%;} 50% {background-position:100% 50%;} }
 
-        /* NEW: Floating images container */
+        /* Floating images container - INCREASED Z-INDEX */
         .floating-images-container {
             position: fixed;
             inset: 0;
             pointer-events: none;
-            z-index: 1;
+            z-index: 3; /* Above overlay, below content */
             overflow: hidden;
         }
 
-        /* NEW: Floating image bubble animation */
+        /* Floating image bubble animation - IMPROVED VISIBILITY */
         .floating-image {
             position: absolute;
-            width: clamp(80px, 12vw, 150px);
-            height: clamp(80px, 12vw, 150px);
+            width: clamp(100px, 15vw, 180px);
+            height: clamp(100px, 15vw, 180px);
             border-radius: 50%;
             object-fit: cover;
             opacity: 0;
             animation: bubbleFloat 25s infinite ease-in-out;
-            box-shadow: 0 8px 32px rgba(255, 105, 180, 0.4);
-            border: 3px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 12px 40px rgba(255, 105, 180, 0.6),
+                        0 0 20px rgba(255, 255, 255, 0.4);
+            border: 4px solid rgba(255, 255, 255, 0.6);
+            filter: brightness(1.1) contrast(1.05);
         }
 
         @keyframes bubbleFloat {
@@ -61,15 +63,15 @@
                 opacity: 0;
                 transform: translateY(120vh) translateX(0) scale(0.5) rotate(0deg);
             }
-            10% {
-                opacity: 0.7;
+            5% {
+                opacity: 0.85;
             }
             50% {
-                opacity: 0.8;
-                transform: translateY(50vh) translateX(100px) scale(1) rotate(180deg);
+                opacity: 0.9;
+                transform: translateY(50vh) translateX(100px) scale(1.1) rotate(180deg);
             }
-            90% {
-                opacity: 0.7;
+            95% {
+                opacity: 0.85;
             }
             100% {
                 opacity: 0;
@@ -110,7 +112,7 @@
             60%  {transform:translateY(75vh) rotate(280deg) translateX(-50px);}
             100% {transform:translateY(140vh) rotate(720deg) translateX(40px); opacity:0;}
         }
-        .overlay { position:fixed; inset:0; background:rgba(0,0,0,0.3); backdrop-filter:blur(3px); z-index:2; }
+        .overlay { position:fixed; inset:0; background:rgba(0,0,0,0.25); backdrop-filter:blur(2px); z-index:2; }
 
         .click-heart {
             position:fixed; pointer-events:none; z-index:9999;
@@ -190,6 +192,10 @@
         @media (min-width: 480px) {
             .progress-bar { padding:12px 32px; font-size:1.25rem; }
             .question-card { padding:32px 28px; }
+            .floating-image {
+                width: clamp(120px, 15vw, 200px);
+                height: clamp(120px, 15vw, 200px);
+            }
         }
 
         @media (min-width: 640px) {
@@ -216,7 +222,7 @@
 <body>
     <div class="animated-bg"></div>
     
-    <!-- NEW: Floating images container -->
+    <!-- Floating images container -->
     <div class="floating-images-container" id="floatingImagesContainer"></div>
     
     <div class="particles" id="particlesContainer"></div>
@@ -337,36 +343,37 @@
 
         const isMobile = window.matchMedia("(max-width: 768px)").matches;
 
-        // NEW: Create floating images
-       function createFloatingImages() {
-    const container = document.getElementById('floatingImagesContainer');
-    const imageNames = ['image1.jpg', 'images2.jpg', 'images3.jpg', 'images4.jpg', 'images5.jpg'];
-    const count = isMobile ? 8 : 15;
-    
-    for (let i = 0; i < count; i++) {
-        const img = document.createElement('img');
-        img.className = 'floating-image';
-        // Use relative path without leading slash
-        img.src = 'images/' + imageNames[i % imageNames.length];
-        img.alt = '';
-        
-        // Random horizontal position
-        img.style.left = Math.random() * 100 + '%';
-        
-        // Random animation duration (20-30 seconds)
-        img.style.animationDuration = (Math.random() * 10 + 20) + 's';
-        
-        // Random delay to stagger the animations
-        img.style.animationDelay = (Math.random() * 15) + 's';
-        
-        // Random size variation
-        const size = Math.random() * 50 + 80; // 80-130px
-        img.style.width = size + 'px';
-        img.style.height = size + 'px';
-        
-        container.appendChild(img);
-    }
-}
+        // Create floating images with better visibility
+        function createFloatingImages() {
+            const container = document.getElementById('floatingImagesContainer');
+            const imageNames = ['image1.jpg', 'images2.jpg', 'images3.jpg', 'images4.jpg', 'images5.jpg'];
+            const count = isMobile ? 10 : 18; // Increased count for better visibility
+            
+            for (let i = 0; i < count; i++) {
+                const img = document.createElement('img');
+                img.className = 'floating-image';
+                img.src = 'images/' + imageNames[i % imageNames.length];
+                img.alt = '';
+                
+                // Random horizontal position
+                img.style.left = Math.random() * 100 + '%';
+                
+                // Random animation duration (18-32 seconds)
+                img.style.animationDuration = (Math.random() * 14 + 18) + 's';
+                
+                // Stagger animations to ensure continuous visibility
+                img.style.animationDelay = (i * 2) + 's';
+                
+                // Random size variation
+                const size = isMobile 
+                    ? Math.random() * 30 + 90  // 90-120px on mobile
+                    : Math.random() * 60 + 120; // 120-180px on desktop
+                img.style.width = size + 'px';
+                img.style.height = size + 'px';
+                
+                container.appendChild(img);
+            }
+        }
         createFloatingImages();
 
         function createParticles() {
